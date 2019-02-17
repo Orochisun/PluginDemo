@@ -1,0 +1,38 @@
+
+buildscript {
+    
+    repositories {
+
+        maven { url 'http://mvn.nutch.cn/nexus/content/groups/public' }
+
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "com.qihoo360.replugin:replugin-plugin-gradle:2.2.4"
+
+
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://mvn.nutch.cn/nexus/content/groups/public' }
+
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

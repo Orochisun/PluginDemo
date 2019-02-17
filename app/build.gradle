@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+ext {
+    pluginAliasName = "demo"
+}
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "cn.nutch.plugindemo"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "pluginAliasName", "\"" + pluginAliasName + "\""
+        manifestPlaceholders = ["name": pluginAliasName]
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+apply plugin: 'replugin-plugin-gradle'
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    annotationProcessor "cn.nutch.router:router-compiler:1.0.2"
+    implementation "cn.nutch.router.replugin:starter:1.0.9"
+}
+repluginPluginConfig {
+    pluginName = pluginAliasName
+}
