@@ -32,4 +32,6 @@ dependencies {
 }
 repluginPluginConfig {
     pluginName = pluginAliasName
+    hostApplicationId = "cn.nutch.host"
+    hostAppLauncherActivity = "cn.nutch.elaph.host.SplashActivity"
 }
