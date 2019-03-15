@@ -6,7 +6,7 @@ ext {
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "cn.nutch.plugindemo"
+        applicationId "cn.nutch.plugin." + pluginAliasName
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -28,7 +28,7 @@ apply plugin: 'replugin-plugin-gradle'
 dependencies {
     implementation 'com.android.support:appcompat-v7:26.0.0'
     annotationProcessor "cn.nutch.router:router-compiler:1.0.2"
-    implementation "cn.nutch.router.replugin:starter:1.0.9"
+    implementation "cn.nutch.router.replugin:starter:1.0.10"
 }
 repluginPluginConfig {
     pluginName = pluginAliasName
