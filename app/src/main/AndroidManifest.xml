@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.nutch.plugindemo">
 
+    <!--
+ ##:1 插件必须定义个自己的App类，继承Android 的 Application
+         并在application 中添加 android:name=".DemoApp"
+         否则无法执行插件的初始化配置
+    -->
     <application
         android:name=".DemoApp"
         android:allowBackup="true"
@@ -10,12 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+ ##:2. 定义插件名，很重要，如果没有定义，插件将无法加载执行
+        -->
         <meta-data
             android:name="com.qihoo360.plugin.name"
             android:value="${name}" />

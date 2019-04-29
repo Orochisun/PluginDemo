@@ -1,29 +1,35 @@
-
 buildscript {
-    
+
     repositories {
-
-        maven { url 'http://mvn.nutch.cn/nexus/content/groups/public' }
-
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
-
         google()
         jcenter()
     }
     dependencies {
+        /**
+         * 尽量将 com.android.tools.build:gradle 升级到最新版本，以避免编译问题
+         */
         classpath 'com.android.tools.build:gradle:3.2.1'
+
+        /**
+         * ##:6 添加360的Replugin编译工具脚本
+         */
         classpath "com.qihoo360.replugin:replugin-plugin-gradle:2.2.4"
-
-
     }
 }
 
 allprojects {
     repositories {
+
+        /**
+         * ##:7 添加平台的开发仓库地址：http://mvn.nutch.cn/nexus/content/groups/public
+         *      为实现快速迭代开发，平台使用了自己的仓库管理依赖
+         *      未将这些库上传到第三方仓库
+         */
         maven { url 'http://mvn.nutch.cn/nexus/content/groups/public' }
 
+        /**
+         * 添加aliyun仓库可加快构建中依赖的下载速度
+         */
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }

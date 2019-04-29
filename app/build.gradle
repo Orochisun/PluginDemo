@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+
+/**
+ * ##:8 定义插件协议，也叫别名，该值在 Manifest 和 DemoApp 有引用
+ *      该协议在宿主host中调用方式为： demo://main?arg=hello
+ */
 ext {
     pluginAliasName = "demo"
 }
@@ -6,16 +11,34 @@ ext {
 android {
     compileSdkVersion 26
     defaultConfig {
+        /**
+         * 为保证插件 applicationId的唯一性，请在发布插件的时候定义为如下形式
+         */
         applicationId "cn.nutch.plugin." + pluginAliasName
+
+        /**
+         * 为实现Android APP尽量兼容老的Android手机版本
+         * minSdkVersion一般小于或等于16
+         */
         minSdkVersion 15
+        /**
+         * 根据最新的Google Android的指导性升级要求，结合国内应用市场的要求
+         * targetSdkVersion 需要 大于或等于 26
+         */
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
+        /**
+         * ##:9 将插件协议分别注入到需要的地方
+         */
         buildConfigField "String", "pluginAliasName", "\"" + pluginAliasName + "\""
         manifestPlaceholders = ["name": pluginAliasName]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
     }
     buildTypes {
         release {
@@ -24,12 +47,34 @@ android {
         }
     }
 }
+/**
+ * ##:10 应用 360 replugin 的编译脚本，一般放在dependencies 前面，以免编译出错
+ *
+ * 关于360 Replugin 的开发可参考 360官方的插件框架如下：
+ *
+ * https://github.com/Qihoo360/RePlugin
+ */
 apply plugin: 'replugin-plugin-gradle'
+
 dependencies {
+    /**
+     * ##:11 添加插件最基本的依赖包：
+     *
+     *   1，统一规定插件的activity实现 appcompat-v7 包，以免出现不可预知的奇怪问题
+     *   2，router-compiler为路由编译处理器。自动生成路由注册类
+     *   3，starter，插件启动初始化库
+     *   4，router-compiler 和 starter 可以随时有升级的版本，开发中尽量下载最新版本
+     */
     implementation 'com.android.support:appcompat-v7:26.0.0'
     annotationProcessor "cn.nutch.router:router-compiler:1.0.2"
-    implementation "cn.nutch.router.replugin:starter:1.0.11"
+    implementation "cn.nutch.router.replugin:starter:1.0.13"
 }
+
+/**
+ * 如下为调试的时候需要的配置，不需要调试可以不配置
+ * 插件的调试的方式有点复杂，该方法需参看Replugin的开发调试方式
+ * 平台也会完善相关开发调试文档，目前还在建设中。
+ */
 repluginPluginConfig {
     pluginName = pluginAliasName
     hostApplicationId = "cn.nutch.host"
